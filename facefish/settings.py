@@ -14,7 +14,7 @@ SECRET_KEY = 'r72xl)5*xyuhmah8=zj*%2mi^4#77_iyi=lup3$w_$-(jwdsnp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [facefishapp.herokuapp.com]
+ALLOWED_HOSTS = ['facefishapp.herokuapp.com']
 
 
 # Application definition
