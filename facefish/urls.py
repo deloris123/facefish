@@ -6,4 +6,6 @@ from facefishapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.loginfish),
+    path('m',views.loginfishm),
+
 ]
