@@ -1,1 +1,4 @@
-web: gunicorn facefish.wsgi
+
+web: gunicorn facefish.wsgi:application --log-file -
+
+

